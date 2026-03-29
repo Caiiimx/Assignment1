@@ -23,7 +23,10 @@ class Assignment1:
     def startSimulation(self):
         # Create Machine and Printer threads
         # Write code here
-            
+        # Create all machine threads
+        for i in range (self.NUM_PRINTERS):
+            t = self.printerThread(i,self)
+            self.mThreads.append(t)
         # Start all the threads
         # Write code here
 
@@ -83,5 +86,3 @@ class Assignment1:
             doc = printDoc(f"My name is machine {id}", id)
             # Insert it in the print queue
             self.outer.print_list.queueInsert(doc)
-
-#test
