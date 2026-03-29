@@ -67,7 +67,13 @@ class Assignment1:
                 self.printerSleep()
                 # Grab the request at the head of the queue and print it
                 # Write code here
-                self.printDox(self.printerID)
+                #Consumer thread: waits for tasks, prints safely, notifies producer when done
+                with self.outer.queue_lock:
+                    while self.outer.print_list.size == 0 and self.outer.sim_active:
+                        self.outer.not_empty.wait()
+                    if self.outer.sim_active:
+                        self.printDox(self.printerID)
+                        self.outer.not_full.notify()
 
         def printerSleep(self):
             sleepSeconds = random.randint(1, self.outer.MAX_PRINTER_SLEEP)
