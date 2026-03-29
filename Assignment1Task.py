@@ -108,4 +108,10 @@ class Assignment1:
             # Build a print document
             doc = printDoc(f"My name is machine {id}", id)
             # Insert it in the print queue
-            self.outer.print_list.queueInsert(doc)
+            # Producer thread: waits for queue space, safely inserts task, notifies consumer when done
+            with self.outer.queue_lock:
+                while self.outer.print_list.size >= self.outer.QUEUE_CAPACITY and self.outer.sim_active:
+                    self.outer.not_full.wait()
+            if self.outer.sim_active:
+                self.outer.print_list.queueInsert(doc)
+                self.outer.not_empty.notify()
