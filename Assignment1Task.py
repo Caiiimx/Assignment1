@@ -63,11 +63,7 @@ class Assignment1:
                 self.printerSleep()
                 # Grab the request at the head of the queue and print it
                 # Write code here
-                # Wait for all threads to finish
-                for t in self.pThreads:
-                    t.join()
-                for t in self.mThreads:
-                    t.join()
+                self.printDox(self.printerID)
 
         def printerSleep(self):
             sleepSeconds = random.randint(1, self.outer.MAX_PRINTER_SLEEP)
@@ -91,7 +87,7 @@ class Assignment1:
                 self.machineSleep()
                 # Machine wakes up and sends a print request
                 # Write code here
-
+                
         def machineSleep(self):
             sleepSeconds = random.randint(1, self.outer.MAX_MACHINE_SLEEP)
             time.sleep(sleepSeconds)
