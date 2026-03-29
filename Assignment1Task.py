@@ -19,6 +19,10 @@ class Assignment1:
         self.print_list = printList()  # Create an empty list of print requests
         self.mThreads = []             # list for machine threads
         self.pThreads = []             # list for printer threads
+        #Task2----------------------------------------------------
+        self.queue_lock = threading.Lock()                     # Creates a mutual exclusion lock
+        self.not_full = threading.Condition(self.queue_lock)   # Wait until the queue is "not full" before adding data
+        self.not_empty = threading.Condition(self.queue_lock)  # Wait until the queue is "not empty" before retrieving data
 
     def startSimulation(self):
         # Create Machine and Printer threads
